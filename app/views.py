@@ -12,11 +12,18 @@ from .models import CartItem
 from datetime import datetime
 from django.db import transaction
 from .models import OrderSerial  # Import the OrderSerial model
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.contrib import messages
 
 html_file_path = "app/templates/mail.html"  # Replace with the path to your HTML file
 
 # Login view
+
+@csrf_exempt
 def user_login(request):
     if request.method == "POST":
         email = request.POST['email']
@@ -100,7 +107,7 @@ def generate_order_number():
     order_number = f"OR{formatted_date}{serial_number_str}"
     return order_number
 
-
+@csrf_exempt
 def cart(request):
     user = request.user
     cart_items = CartItem.objects.filter(user_id=user)
@@ -150,7 +157,8 @@ def cart(request):
     return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
 
 
-from django.contrib import messages
+
+@csrf_exempt
 def update_cart(request, item_id):
     item = get_object_or_404(CartItem, id=item_id)
     
@@ -269,12 +277,10 @@ def order_list(request):
     orders = Order.objects.all()
     return render(request, 'order_history.html', {'orders': orders})
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import get_object_or_404
 
-from django.http import JsonResponse
 
+
+@csrf_exempt
 def confirm_order(request, order_id):
     order = Order.objects.get(id=order_id)
 
