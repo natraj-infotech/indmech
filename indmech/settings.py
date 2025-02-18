@@ -25,6 +25,8 @@ SECRET_KEY = 'django-insecure-tsyrk)xl+@0h^ea#(88ot9il3=jf_m-6@h_p8i$3+*e(r=hb^(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SESSION_COOKIE_SECURE = True
+
 ALLOWED_HOSTS = ["*"]
 
 
