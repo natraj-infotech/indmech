@@ -108,12 +108,22 @@ class ProductResource(resources.ModelResource):
         if int(row.get("in_stock", 0)) < 0:
             raise ValidationError("Stock cannot be negative.")
 
-        # Get or create catalog heading
-        row["catalog_heading"], _ = CatalogHeading.objects.get_or_create(name=row["catalog_heading"])
+        # Get or create catalog heading (it should always exist)
+        catalog_heading, _ = CatalogHeading.objects.get_or_create(name=row["catalog_heading"])
 
-        # Get or create catalog subheading
-        row["catalog_subheading"], _ = CatalogSubHeading.objects.get_or_create(name=row["catalog_subheading"])
+        # Get or create catalog subheading and associate it with the catalog heading
+        catalog_subheading_name = row.get("catalog_subheading")
+        if catalog_subheading_name:
+            catalog_subheading, created = CatalogSubHeading.objects.get_or_create(
+                name=catalog_subheading_name, 
+                catalog_heading=catalog_heading  # Associate with the catalog_heading
+            )
+            row["catalog_subheading"] = catalog_subheading  # Set the actual subheading object to row
+        else:
+            row["catalog_subheading"] = None  # In case no subheading is provided
 
+        # Set the catalog_heading on the row to ensure it's imported correctly
+        row["catalog_heading"] = catalog_heading
 # Extend ImportExportModelAdmin
 from import_export.admin import ImportExportModelAdmin
 from import_export.formats.base_formats import XLS, XLSX
