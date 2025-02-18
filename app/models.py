@@ -78,16 +78,12 @@ class Product(models.Model):
         CatalogHeading,
         on_delete=models.CASCADE,
         related_name='products',
-        default=1  # Replace with a valid CatalogHeading ID (or make it dynamic if needed)
+        default=1  # Replace with a valid CatalogHeading ID
     )
-    
-    # catalog_subheading is nullable to prevent errors if missing
     catalog_subheading = models.ForeignKey(
         CatalogSubHeading,
         on_delete=models.CASCADE,
-        related_name='products',
-        null=True,  # Allow it to be empty
-        blank=True  # Allow blank for forms
+        related_name='products'
     )
     catalog_number = models.TextField()
     description = models.TextField()
@@ -364,3 +360,4 @@ class StockProduct(Product):
         proxy = True
         verbose_name = "Stock Product"
         verbose_name_plural = "Stock Products"
+
