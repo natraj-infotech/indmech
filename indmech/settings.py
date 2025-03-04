@@ -28,7 +28,7 @@ DEBUG = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ['vercel.app']
+ALLOWED_HOSTS = ['indmech1.vercel.app']
 
 
 # Application definition
