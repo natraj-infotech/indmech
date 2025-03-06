@@ -28,7 +28,8 @@ DEBUG = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ['indmech1.vercel.app']
+ALLOWED_HOSTS = ['indmech-hfczdkg0bwhye3dy.centralindia-01.azurewebsites.net']
+CSRF_TRUSTED_ORIGINS = ['indmech-hfczdkg0bwhye3dy.centralindia-01.azurewebsites.net']
 
 
 # Application definition
